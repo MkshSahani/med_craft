@@ -1,0 +1,4 @@
+-- SQL script to create database schema for app
+CREATE DATABASE IF NOT EXISTS med_craft;
+--- table name : med_carft_users
+CREATE TABLE IF NOT EXISTS med_craft_users(user_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, username VARCHAR(200) NOT NULL, firstname VARCHAR(100) NOT NULL, middle_name VARCHAR(100), lastname VARCHAR(100), password VARCHAR(100) NOT NULL, access_token VARCHAR(100) NOT NULL, email VARCHAR(100) NOT NULL, phone VARCHAR(100) NOT NULL, is_active INT NOT NULL DEFAULT 1,  created_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, update_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL);
