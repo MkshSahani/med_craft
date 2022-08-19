@@ -5,5 +5,5 @@ database_config = {
     'host'    : 'localhost',
     'username': 'root',
     'password': 'msahani852',
-    'db'      : 'amazon'
+    'db'      : 'med_craft'
 }
