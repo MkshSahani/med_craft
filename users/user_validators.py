@@ -13,3 +13,12 @@ class UserValidator(BaseModel):
     email       : str 
     phone       : str 
     user_type   : int 
+
+
+# * UserLoginValidator -> Model for user login 
+
+class UserLoginValidator(BaseModel): 
+
+    username    : str
+    password    : str 
+

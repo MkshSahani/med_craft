@@ -1,13 +1,13 @@
-def send_error(msg : str = "", data: any = {}):
+def send_error(msg : str = "", data: any = {}, status_code: int = 400):
     return {
-        'status': 400,
+        'status': status_code,
         'data': data,
         'message': msg
     }
 
-def send_response(msg: str = "", data: any = {}):
+def send_response(msg: str = "", data: any = {}, status_code : int = 200):
     return {
-        'status': 200,
+        'status': status_code,
         'data': data,
         'message': msg
     }
