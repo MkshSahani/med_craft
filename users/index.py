@@ -25,8 +25,6 @@ async def register_user(user_details : UserValidator):
         user_register_response = await users_services.register_user(
             user_deatils = user_details
         )
-        print("=============== sending response ===================")
-        print(user_register_response)
         return user_register_response
     except Exception as e: 
         return responses.send_error(msg = "Something Went Wrong", data = e)

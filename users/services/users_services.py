@@ -6,6 +6,7 @@ import sql_services.services as sql_service
 import logger.logging as logger
 import responses.responses as responses
 
+# * func name: register user -> register new users on platform. 
 async def register_user(user_deatils: UserValidator):
     try:
         sql_query = "INSERT INTO `med_craft_users`( ";
@@ -35,12 +36,15 @@ async def register_user(user_deatils: UserValidator):
         access_token = secrets.token_hex(35)
         sql_values_str += f"'{access_token}',"
         sql_attr_str = ",".join(sql_attributes_lst)
-        # sql_values_str = sql_values_str.split(" ")
-        # sql_values_str.pop()
 
         sql_query += sql_attr_str + ")" + " VALUES (" + sql_values_str[:-1] + " )"
         logger.info(api_refrence="register_user", msg = "SQL Query", data = sql_query)
         sql_service.execute_query(api_refrence="register User", sql_query=sql_query, commit_operation=True)
+        if int(user_deatils['user_type']) == 0: ## patients registertion. 
+            pass 
+        else: ## doctor registeration. 
+            pass 
+        
         return responses.send_response(msg = "account created", data = {
             'access_token': access_token
         })
@@ -48,7 +52,7 @@ async def register_user(user_deatils: UserValidator):
         logger.error(api_refrence="register_user", msg = "Error in User Registration", data = e)
         raise e
 
-
+# * user_login -> validate username and password and returns the valid password. 
 async def user_login(user_login_details: UserLoginValidator):
     try: 
         username = user_login_details['username']
@@ -77,3 +81,25 @@ async def user_login(user_login_details: UserLoginValidator):
             status_code= 400,
             data = {}
         )
+
+# * function to validate access token.
+async def validate_access_token(access_token: str = ""): 
+    try: 
+        sql_query = f"SELECT * FROM med_craft_users WHERE access_token='{access_token}'"
+        sql_response = await sql_service.execute_query(api_refrence="validate access token", sql_query=sql_query)
+        return sql_response
+    except Exception as e: 
+        logger.error(api_refrence="validate access token", msg = "Error Found in validate access token", data = e)
+        raise e
+
+
+async def register_doctors(doctor_id: int, fullname: str, phone: str, specialization: str, hopital_id: int):
+    try: 
+        sql_query = "INSERT INTO doctors(docker_id, fullname, phone, specialization, hopital_id) "
+        sql_query += f"VALUES({doctor_id}, '{fullname}', '{phone}', '{specialization}', {hopital_id})"
+        sql_response = await sql_service.execute_query(api_refrence="register doctors", sql_query=sql_query)
+        logger.log(api_refrence="Register Doctor", msg="Doctor Registered", data = sql_response)
+        return sql_response
+    except Exception as e: 
+        logger.error(api_refrence="register doctors", msg = "Error Found For Registering Doctors", data = e)
+        raise e
