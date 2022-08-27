@@ -8,7 +8,7 @@ async def execute_query(api_refrence : str = "", sql_query : str = "", commit_op
             logger.log(api_refrence, "SQL Query Is Empty", sql_query)
             raise Exception("SQL Query Empty !!!")
         cursor = sql_server.cursor();
-        cursor.execute(sql_query)
+        res = cursor.execute(sql_query)
         if commit_operation:
             sql_server.commit()
         result = cursor.fetchall()

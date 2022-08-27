@@ -1,10 +1,10 @@
 # filename: users_services.py 
-from os import access
 from users.user_validators import UserValidator, UserLoginValidator
 import secrets
 import sql_services.services as sql_service
 import logger.logging as logger
 import responses.responses as responses
+import users.constants as constants
 
 # * func name: register user -> register new users on platform. 
 async def register_user(user_deatils: UserValidator):
@@ -39,12 +39,8 @@ async def register_user(user_deatils: UserValidator):
 
         sql_query += sql_attr_str + ")" + " VALUES (" + sql_values_str[:-1] + " )"
         logger.info(api_refrence="register_user", msg = "SQL Query", data = sql_query)
-        sql_service.execute_query(api_refrence="register User", sql_query=sql_query, commit_operation=True)
-        if int(user_deatils['user_type']) == 0: ## patients registertion. 
-            pass 
-        else: ## doctor registeration. 
-            pass 
-        
+        sql_response = await sql_service.execute_query(api_refrence="register User", sql_query=sql_query, commit_operation=True)
+        logger.info(api_refrence="register_user", msg = "SQL Response", data = sql_response)
         return responses.send_response(msg = "account created", data = {
             'access_token': access_token
         })
@@ -87,7 +83,9 @@ async def validate_access_token(access_token: str = ""):
     try: 
         sql_query = f"SELECT * FROM med_craft_users WHERE access_token='{access_token}'"
         sql_response = await sql_service.execute_query(api_refrence="validate access token", sql_query=sql_query)
-        return sql_response
+        if  len(sql_response) != 0:
+            return sql_response[0]
+        return ()
     except Exception as e: 
         logger.error(api_refrence="validate access token", msg = "Error Found in validate access token", data = e)
         raise e
@@ -95,7 +93,7 @@ async def validate_access_token(access_token: str = ""):
 
 async def register_doctors(doctor_id: int, fullname: str, phone: str, specialization: str, hopital_id: int):
     try: 
-        sql_query = "INSERT INTO doctors(docker_id, fullname, phone, specialization, hopital_id) "
+        sql_query = "INSERT INTO doctors(doctor_id, fullname, phone, specialization, hopital_id) "
         sql_query += f"VALUES({doctor_id}, '{fullname}', '{phone}', '{specialization}', {hopital_id})"
         sql_response = await sql_service.execute_query(api_refrence="register doctors", sql_query=sql_query)
         logger.log(api_refrence="Register Doctor", msg="Doctor Registered", data = sql_response)

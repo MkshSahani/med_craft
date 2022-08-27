@@ -1,10 +1,14 @@
 # filname: logging.py 
+import datetime
 
-def log(api_refrence : str = "", msg : str = "", data : any = {}): 
-    print(f"[*] LOG -> {api_refrence} msg : {msg} data : {data}")
+def log(api_refrence : str = "", msg : str = "", data : any = {}):
+    curr_time = datetime.datetime.now() 
+    print(f"{curr_time} [*] LOG -> {api_refrence} msg : {msg} data : {data}")
 
 def info(api_refrence: str = "", msg : str = "", data : any = {}): 
-    print(f"[*] INFO -> {api_refrence} msg : {msg} data : {data}")
+    curr_time = datetime.datetime.now()
+    print(f"{curr_time} [*] INFO -> {api_refrence} msg : {msg} data : {data}")
 
 def error(api_refrence: str = "", msg : str = "", data : any = {}) :
-    print(f"[*] EROR -> {api_refrence} msg : {msg} data : {data} ")
+    curr_time = datetime.datetime.now()
+    print(f"{curr_time} [*] EROR -> {api_refrence} msg : {msg} data : {data} ")

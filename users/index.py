@@ -1,4 +1,3 @@
-from nis import cat
 from fastapi import APIRouter 
 from users.services import users_services 
 from users.user_validators import UserValidator,UserLoginValidator
