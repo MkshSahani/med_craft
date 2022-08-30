@@ -3,12 +3,10 @@ from users.services import users_services
 from users.user_validators import UserValidator,UserLoginValidator
 import responses.responses as responses
 
-
 users_router = APIRouter(
     prefix="/users", 
     tags=["users"]
 )
-
 
 @users_router.get("/test_connection")
 async def get_connection(): 
@@ -17,6 +15,7 @@ async def get_connection():
         "data": [],
         "message": "SuccessFull"
     }
+
 @users_router.post("/register_user")
 async def register_user(user_details : UserValidator):
     try:    
@@ -27,7 +26,6 @@ async def register_user(user_details : UserValidator):
         return user_register_response
     except Exception as e: 
         return responses.send_error(msg = "Something Went Wrong", data = e)
-
 
 @users_router.post("/user_login")
 async def user_login(user_login_details: UserLoginValidator):
