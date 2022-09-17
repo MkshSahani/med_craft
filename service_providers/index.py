@@ -17,7 +17,7 @@ async def register_organization(organization_data: OrganizationValidator):
         res = await  service_providers_services.register_organization(organization_data=organization_data)
         return res
     except Exception as e: 
-        return responses.send_error(msg = "Error Occured White Execution")
+        return responses.send_error(msg = "Error Occured White Execution", data = e)
 
 @service_providers_router.post('/register_doctor')
 async def register_doctors(): 

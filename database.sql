@@ -5,8 +5,9 @@ CREATE TABLE IF NOT EXISTS med_craft_users(user_id INT AUTO_INCREMENT NOT NULL P
 --- table name : organizations.
 CREATE TABLE IF NOT EXISTS organizations(organization_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, org_name VARCHAR(200) NOT NULL, org_address TEXT NOT NULL, org_country VARCHAR(100) NOT NULL, org_state VARCHAR(100) NOT NULL, org_city VARCHAR(100) NOT NULL, is_active TINYINT(1) NOT NULL DEFAULT 1, creation_datetime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_datetime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, phone VARCHAR(20) NOT NULL, email VARCHAR(20) NOT NULL, passwd TEXT NOT NULL);
 --- table name: doctors.
-CREATE TABLE IF NOT EXISTS doctors(doctor_id INT NOT NULL PRIMARY KEY, fullname VARCHAR(200) NOT NULL, phone VARCHAR(20) NOT NULL, specialization VARCHAR(200) NOT NULL,hopital_id INT);
 -- table name : hospital.
 CREATE TABLE IF NOT EXISTS hospital(hospital_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, hospital_name VARCHAR(200) NOT NULL, hospital_addr TEXT NOT NULL, phone VARCHAR(20) NOT NULL, organizations_id INT);
 -- table name: patient.
 CREATE TABLE IF NOT EXISTS patients(patient_id INT PRIMARY KEY, patient_name VARCHAR(200) NOT NULL, patient_addr VARCHAR(200) NOT NULL, phone VARCHAR(20) NOT NULL);
+
+CREATE TABLE IF NOT EXISTS doctors(doctor_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, organization_id INT NOT NULL, hospital_id INT, fullname VARCHAR(200) NOT NULL, email VARCHAR(200) NOT NULL, phone VARCHAR(20) NOT NULL)

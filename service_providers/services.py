@@ -22,7 +22,7 @@ async def register_organization(organization_data: OrganizationValidator):
     except Exception as e:
         logger.error(api_refrence="register organization", msg = "Error While Execution", data = e)
         raise e
-        
+
 async def validate_email(email: str): 
     try: 
         if email == '':
@@ -38,4 +38,20 @@ async def validate_email(email: str):
             return False
     except Exception as e: 
         logger.error(api_refrence="validate email", msg = "Error While validating Email", data = e)
-        raise e 
+        raise e
+    
+async def validate_access_token(access_token: str): 
+    try: 
+        if access_token.srip() == "":
+            return ()
+        sql_query = f"SELECT organization_id FROM organizations WHERE access_token = '{access_token}'"
+        sql_response = execute_query(api_refrence="validate access token", sql_query=sql_query, commit_operation=False)
+        logger.info(api_refrence="validate access token", msg = "validate organization access token", data = sql_response)
+        return sql_response
+        return sql_response
+    except Exception as e:
+        logger.error(api_refrence="validate access token", msg = "Error While validating access token", data = e)
+        raise e
+
+async def register_doctor():
+    pass

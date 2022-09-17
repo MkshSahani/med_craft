@@ -11,3 +11,10 @@ class OrganizationValidator(BaseModel):
     organization_phone      : str 
     organization_email      : str
     organization_password   : str
+
+class HospitalModel(BaseModel): 
+    pass 
+
+
+class DoctorModel(BaseModel): 
+    pass
