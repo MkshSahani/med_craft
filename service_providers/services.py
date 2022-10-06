@@ -17,7 +17,8 @@ async def register_organization(organization_data: OrganizationValidator):
         sql_query += f"'{organization_data['organization_password']}', '{access_token}')"
         await execute_query(api_refrence="register organization", sql_query=sql_query, commit_operation=True)
         return responses.send_response(msg = "Organization Created SuccessFully", data = {
-            'access_token': access_token
+            'access_token': access_token,
+            'email': organization_data['organization_email']
         })
     except Exception as e:
         logger.error(api_refrence="register organization", msg = "Error While Execution", data = e)
