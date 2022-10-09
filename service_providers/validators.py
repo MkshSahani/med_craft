@@ -18,3 +18,8 @@ class HospitalModel(BaseModel):
 
 class DoctorModel(BaseModel): 
     pass
+
+class OrganizationLoginValidator(BaseModel): 
+    
+    organization_email      : str
+    organization_password   : str

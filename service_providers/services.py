@@ -1,4 +1,4 @@
-from .validators import OrganizationValidator
+from .validators import OrganizationValidator, OrganizationLoginValidator
 from sql_services.services import execute_query
 import logger.logging as logger
 import secrets
@@ -49,10 +49,29 @@ async def validate_access_token(access_token: str):
         sql_response = execute_query(api_refrence="validate access token", sql_query=sql_query, commit_operation=False)
         logger.info(api_refrence="validate access token", msg = "validate organization access token", data = sql_response)
         return sql_response
-        return sql_response
     except Exception as e:
         logger.error(api_refrence="validate access token", msg = "Error While validating access token", data = e)
         raise e
 
 async def register_doctor():
     pass
+
+async def organization_login(organization_login_details : OrganizationLoginValidator):
+    try: 
+        user_details = get_organization(organization_email=organization_login_details['organization_email'], organization_password=organization_login_details['organization_password'])
+        print(user_details[0])
+        if len(user_details) == 0: 
+            return responses.send_error(msg = "invalid credentails", status_code=400)
+        user_details = user_details[0]
+        return responses.send_response(msg = "Successfull", data = user_details)       
+    except Exception as e:
+        logger.error("Organization Login", msg = "Error While Execution", data = e)
+        raise e
+
+async def get_organization(organization_email: str, organization_password : str):
+    try: 
+        sql_query = f"SELECT * FROM organizations WHERE organization_email = '{organization_email}' and organization_password = '{organization_password}'"
+        sql_response = execute_query(api_refrence="get_organization", sql_query=sql_query, commit_operation=False)
+        return sql_response
+    except Exception as e: 
+        pass 
