@@ -12,4 +12,3 @@ try:
     print("######### Mysql Server Connected #############")
 except Exception as e: 
     print("######### Error in Connecting SQL Server ######")
-

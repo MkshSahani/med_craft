@@ -12,8 +12,16 @@ class OrganizationValidator(BaseModel):
     organization_email      : str
     organization_password   : str
 
-class HospitalModel(BaseModel): 
-    pass 
+class HospitalModel(BaseModel):
+    api_key                 : str
+    hospital_name           : str 
+    hospital_addr           : str 
+    phone                   : str 
+    organization_id         : int
+    hospital_state          : str
+    hospital_country        : str
+    hospital_pincode        : str
+
 
 
 class DoctorModel(BaseModel): 

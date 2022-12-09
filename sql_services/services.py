@@ -12,7 +12,7 @@ async def execute_query(api_refrence : str = "", sql_query : str = "", commit_op
         if commit_operation:
             sql_server.commit()
         result = cursor.fetchall()
-        logger.info(api_refrence=api_refrence, msg = "SQL Query Result", data = result)
+        logger.info(api_refrence=api_refrence, msg = sql_query, data = result)
         return result 
     except Exception as e: 
         logger.error(api_refrence, "Error While Executing SQL Query", e)

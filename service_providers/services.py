@@ -43,10 +43,10 @@ async def validate_email(email: str):
     
 async def validate_access_token(access_token: str): 
     try: 
-        if access_token.srip() == "":
+        if access_token.strip() == "":
             return ()
         sql_query = f"SELECT organization_id FROM organizations WHERE access_token = '{access_token}'"
-        sql_response = execute_query(api_refrence="validate access token", sql_query=sql_query, commit_operation=False)
+        sql_response = await execute_query(api_refrence="validate access token", sql_query=sql_query, commit_operation=False)
         logger.info(api_refrence="validate access token", msg = "validate organization access token", data = sql_response)
         return sql_response
     except Exception as e:
@@ -75,3 +75,20 @@ async def get_organization(organization_email: str, organization_password : str)
         return sql_response
     except Exception as e: 
         pass 
+
+async def hospital_registration(hospital_data : any): 
+    try:
+        sql_query = f"INSERT INTO hospital(hospital_name,  \
+                      hospital_addr, phone, organizations_id, hospital_state, \
+                      hospital_country, hospital_pincode) \
+                      VALUES('{hospital_data['hospital_name']}', '{hospital_data['hospital_addr']}', \
+                      '{hospital_data['phone']}', {hospital_data['organization_id']}, \
+                      '{hospital_data['hospital_state']}', '{hospital_data['hospital_country']}', \
+                      '{hospital_data['hospital_pincode']}')"
+        print(sql_query)
+        sql_response = await execute_query(api_refrence="hospital_registartion", sql_query=sql_query)
+        logger.log(api_refrence="register_hospital", msg = sql_query, data = {})
+        return sql_response
+    except Exception as e: 
+        logger.error(api_refrence="register_hospital", msg = str(e), data = {})
+        raise e
